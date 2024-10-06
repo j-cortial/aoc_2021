@@ -1,4 +1,4 @@
-use std::{collections::HashMap, hash::Hash};
+use std::collections::HashMap;
 
 use nalgebra::RowVector2;
 
@@ -117,6 +117,14 @@ fn solve_part1(input_image: &Image, algorithm: &[PixelValue]) -> usize {
         .unwrap()
 }
 
+fn solve_part2(input_image: &Image, algorithm: &[PixelValue]) -> usize {
+    let mut image = input_image.clone();
+    for _ in 0..50 {
+        image = image.enhance(algorithm);
+    }
+    image.lit_pixel_count().unwrap()
+}
+
 fn parse_input(input: &str) -> (Vec<PixelValue>, Image) {
     let mut data = input.split("\n\n");
     let algorithm = data
@@ -144,6 +152,8 @@ fn main() {
     let (algorithm, input_image) = parse_input(input);
     let answer1 = solve_part1(&input_image, &algorithm);
     println!("The answer to part 1 is {answer1}");
+    let answer2 = solve_part2(&input_image, &algorithm);
+    println!("The answer to part 2 is {answer2}");
 }
 
 #[cfg(test)]
